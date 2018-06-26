@@ -1,0 +1,92 @@
+<% include ../layouts/header.ejs %>
+<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 sua-cate">
+    <div class="row">
+        <div class="content-header col-lg-5">
+            <h3>Chi tiết đơn hàng</h3>
+        </div>
+    </div>
+    
+    <div class="row content">
+        <% if(success_msg != ''){ %> 
+            <div class="alert alert-success"><%= success_msg%></div>
+        <% } %>
+        <div class="content-body col-lg-12">
+            <div class="row">
+                <div class="description col-lg-6">
+                    <div class="info">
+                        <h3>Thông tin</h3>
+                        <p>Tên khách hàng : <%= cart.name %></p>
+                        <p>Số điện thoại : <%= cart.sdt %></p>
+                        <p>Xã, huyện, tỉnh : <%= cart.ward  %>- <%= cart.dictrict %>- <%= cart.province %></p>
+                        <p>Tin nhắn : <%= cart.msg %></p>
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                        <table id="example" class="display" style="width:100%">
+                                <thead>
+                                    <tr > 
+                                        <th>Tên</th>
+                                        <th>Hình ảnh</th>
+                                        <th>Số lượng</th>
+                                        <th style="text-align: center">Số lượng còn trong kho</th>
+                                        <th>Tiền</th>
+                                        <th>Ghi chú</th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                   <% var total = 0; var qtyCart, qtyPro ; cart.cart.forEach(function(e) { %>
+                                        <tr>
+                                            <% total += e.price %>
+                                            <td><%= e.item.tittle %></td>
+                                            <td><img src="<%= e.item.imagePath[0]%>" height="100px" width="100px" alt=""></td>
+                                            
+                                            <td><%= e.qty %></td>
+                                            <td><%= e.item.qty %></td>
+                                            <td><%= e.price %></td>
+                                            <% if( e.item.qty < e.qty){ qtyCart = e.qty; qtyPro = e.item.qty %>
+                                                <td><p class="alert alert-danger"> Số lượng sản phẩm đã đặt lớn hơn sản phẩm trong kho </p></td>
+                                            <% } %>
+                                            
+                                        </tr>
+                                    <% }) %>
+                                </tbody>
+                                
+                            </table>
+                            
+                </div>
+            </div>
+            <div class="" style="background-color: #ecf0f1">
+                <div style="padding: 50px 50px; text-align: right">
+                    <h3>Tổng tiền : <span style="color: #e74c3c"><%= total %></span></h3>
+                    <% if(cart.status == 0 && qtyPro < qtyCart) { %>
+                        
+                        <a href="admin/cart/giao-hang/<%= cart._id %>" onclick = "return confirm('Số lượng sản phẩm đã đặt lớn hơn sản phẩm trong kho. Bạn chắc chứ?');">
+                            <span class="btn btn-primary">Giao hàng</span>
+                        </a> 
+                    <% }else if(cart.status == 0) {%>  
+                        <a href="admin/cart/giao-hang/<%= cart._id %>" >
+                            <span class="btn btn-primary">Giao hàng</span>
+                        </a>
+                    <% }else if(cart.status == 1) { %>
+                        
+                        <a href="admin/cart/thanh-toan/<%= cart._id %>">
+                            <span class="btn btn-primary">Thanh toán</span>
+                        </a>
+                        
+                    <% }else{ %>
+                        <span class="btn btn-primary">Đã thanh toán</span>
+                    <% } %>
+                    
+                </div>
+            </div>
+           
+        </div>
+    </div>
+   
+</div>
+<% include ../layouts/footer.ejs %>

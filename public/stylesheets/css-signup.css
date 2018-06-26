@@ -1,0 +1,10 @@
+.click{
+    color: red
+}
+i.fas{
+    display: none
+}
+.err-email,#err-email,#err-user,#err-user1,#err-pw{
+    color: red;
+    margin: 5px 0px 5px 107px;
+}

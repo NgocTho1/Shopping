@@ -1,0 +1,40 @@
+<% include ../layouts/header.ejs %>
+
+<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+        <div class="row">
+            <div class="content-header col-lg-5">
+                <h3>DANH SÁCH CATEGORY</h3>
+            </div>
+        </div>
+        <div class="row">
+            <% if(success_msg != ''){ %>
+                <div class="alert alert-success"><%= success_msg %></div>
+            <% } %>
+            <div class="content-body col-lg-12">
+                <table id="example" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Name không dấu</th>
+                            <th>Actiom</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% cate.forEach(function(pro){ %>
+                        <tr>
+                            <td><%= pro.name  %></td>
+                            <td><%= pro.url  %></td>
+                            <td>
+                                <a href="/admin/cate/sua-cate/<%= pro._id%>"><button class="btn btn-primary">Sửa</button></a>
+                                <a href="/admin/cate/xoa-cate/<%= pro._id %>"><button class="btn btn-danger">Xóa</button></a>
+                            </td>
+                            
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+<% include ../layouts/footer.ejs %>

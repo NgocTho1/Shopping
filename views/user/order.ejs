@@ -1,0 +1,37 @@
+<% include ../layouts/header.ejs %>
+    <div class="container order">
+        <div class="row">
+            <h1>Đơn hàng của tôi</h1>
+            <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Ngày mua</th>
+                            <th>Sản phẩm</th>
+                            <th>Tổng tiền</th>
+                            <th>Trạng thái</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% order.forEach(function(data) { %>
+                        <tr>
+                            <td><%= data.date %></td>
+                            <td><%= data.cart[0].item.tittle %></td>
+                            <% var total = 0; data.cart.forEach(function(cart) { total+=cart.price %>
+                               
+                            <% }) %>
+                            <td><%= total %></td>
+                            <% if(data.status == 0) { %>
+                                <td><span>Đặt hàng</span></td>
+                            <% }else if(data.status == 1) { %>
+                                <td><span>Đang giao hàng</span></td>
+                            <% }else{ %>
+                                <td><span>Đã thanh toán</span></td>
+                            <% } %>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+        </div>
+    </div>
+
+<% include ../layouts/footer.ejs %>

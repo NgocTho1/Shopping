@@ -1,0 +1,249 @@
+<% include ../layouts/header %>
+    <script>
+        function imageZoom(imgID, resultID) {
+            var img, lens, result, cx, cy;
+            img = document.getElementsByClassName(imgID)
+            result = document.getElementById(resultID);
+            /*create lens:*/
+
+            lens = document.createElement("DIV");
+            lens.setAttribute("class", "img-zoom-lens");
+            /*insert lens:*/
+            img[0].parentElement.insertBefore(lens, img[0]);
+            /*calculate the ratio between result DIV and lens:*/
+            cx = result.offsetWidth / lens.offsetWidth;
+            cy = result.offsetHeight / lens.offsetHeight;
+
+            //alert(lens.offsetWidth)
+            /*set background properties for the result DIV:*/
+            result.style.backgroundImage = "url('" + img[0].src + "')";
+            result.style.backgroundSize = (img[0].width * cx) + "px " + (img[0].height * cy) + "px";
+            /*execute a function when someone moves the cursor over the image, or the lens:*/
+            lens.addEventListener("mousemove", moveLens);
+            img[0].addEventListener("mousemove", moveLens);
+            /*and also for touch screens:*/
+            lens.addEventListener("touchmove", moveLens);
+            img[0].addEventListener("touchmove", moveLens);
+
+            function moveLens(e) {
+                var pos, x, y;
+                /*prevent any other actions that may occur when moving over the image:*/
+                e.preventDefault();
+                /*get the cursor's x and y positions:*/
+                pos = getCursorPos(e);
+                /*calculate the position of the lens:*/
+                x = pos.x - (lens.offsetWidth / 2);
+                y = pos.y - (lens.offsetHeight / 2);
+                //alert(lens.offsetHeight)
+                /*prevent the lens from being positioned outside the image:*/
+                if (x > img[0].width - lens.offsetWidth) {
+                    x = img[0].width - lens.offsetWidth;
+                }
+                if (x < 0) {
+                    x = 0;
+                }
+                if (y > img[0].height - lens.offsetHeight) {
+                    y = img[0].height - lens.offsetHeight;
+                }
+                if (y < 0) {
+                    y = 0;
+                }
+                /*set the position of the lens:*/
+                lens.style.left = x + "px";
+                lens.style.top = y + "px";
+                /*display what the lens "sees":*/
+                result.style.backgroundPosition = "-" + (x * cx) + "px -" + (y * cy) + "px";
+            }
+
+            function getCursorPos(e) {
+                var a, x = 0,
+                    y = 0;
+                e = e || window.event;
+                /*get the x and y positions of the image:*/
+                a = img[0].getBoundingClientRect();
+                /*calculate the cursor's x and y coordinates, relative to the image:*/
+                x = e.pageX - a.left;
+                y = e.pageY - a.top;
+                /*consider any page scrolling:*/
+                x = x - window.pageXOffset;
+                y = y - window.pageYOffset;
+                return {
+                    x: x,
+                    y: y
+                };
+            }
+        }
+    </script>
+    <div class="container product-container">
+        <div class="row">
+            <ol class="breadcrumb">
+                <li>
+                    <a href="<%= cate.url%>/all">
+                        <%= cate.name %>
+                    </a>
+                </li>
+                <li class="active">
+                    <%= product.tittle %>
+                </li>
+            </ol>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 product-image">
+                <div class="product-main-image">
+                    <% product.imagePath.forEach(function(pro) { %>
+                        <img class="zoomcontainer" src="<%= pro %>" alt="">
+                        <% }) %>
+
+
+                            <div id="myresult" class="img-zoom-result"></div>
+                </div>
+                <div class="product-other-image">
+                    <% product.imagePath.forEach(function(pro) { %>
+                        <img src="<%= pro  %>" alt="">
+                        <% }) %>
+
+
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <div class="product-cart">
+                    <h1 class="item-name">
+                        <%= product.tittle  %>
+                    </h1>
+                    <div class="price-product">
+                        <strong>
+                            $
+                            <%= product.price %>
+                        </strong>
+                    </div>
+                    <div class="description">
+                        <p>
+                            <%= product.description  %>
+
+                    </div>
+
+                    <% if( product.qty == 0) { %>
+                        <p class="btn btn-danger">Tạm hết hàng</p>
+                        <% }else{ %>
+                            <p>
+                                <a href="/add-cart/<%= product._id %> " class="btn btn-primary" role="button">Thêm vào giỏ hàng</a>
+
+                            </p>
+                            <% } %>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 related-products">
+                <h1>Các sản phẩm liên quan</h1>
+                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                    </ol>
+
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner" role="listbox">
+
+                        <div class="item">
+                            <% var i = 0; relatedPro.forEach(function(related) {  %>
+                                <% if(i<4){ %>
+                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                        <div class="thumbnail">
+                                            <img class="lazyload" data-original="<%= related.imagePath[0]%>" alt="...">
+                                            <div class="caption">
+                                                <h3>
+                                                    <%= related.tittle %>
+                                                </h3>
+
+                                                <p>
+                                                    <%= related.price %>
+                                                </p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% } %>
+                                        <% i++ });  %>
+
+
+
+                        </div>
+
+                        <div class="item">
+                            <% var i = 0; relatedPro.forEach(function(related) {   %>
+                                <% if(i >= 4 && i < 8){ %>
+                                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                                        <div class="thumbnail">
+                                            <img src="<%= related.imagePath[0]%>" alt="...">
+                                            <div class="caption">
+                                                <h3>
+                                                    <%= related.tittle %>
+                                                </h3>
+
+                                                <p>
+                                                    <%= related.price %>
+                                                </p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% } %>
+                                        <% i++ }) %>
+                        </div>
+                        ...
+                    </div>
+
+                    <!-- Controls -->
+                    <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev" data-interval="0">
+                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next" data-interval="0">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+
+            </div>
+
+
+            <div class="col-md-12">
+                <% if(!login) {%>
+                    <a href='/user/login?redirect=<%= cate.url %>/<%= product.tittleLink %>.<%= product._id %>'>Sign in</a>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 col-lg-offset-4">
+                        <form action="/user/logincomment" method="POST" role="form">
+                            <legend>Đăng nhập</legend>
+        
+                            <div class="form-group">
+                                <label for="">Email:</label>
+                                <input type="text" class="form-control" id="" name="email"  placeholder="Email">
+                            </div>
+                            <p style="color:red">
+                                
+                            </p>
+                            <div class="form-group">
+                                <label for="">Mật khẩu:</label>
+                                <input type="text" class="form-control" id="" name="password" placeholder="Mật khẩu">
+                                <input type="hidden" value="<%= cate.url %>" name="cate">
+                                <input type="hidden" value="<%= product.tittleLink %>" name="tittle">
+                                <input type="hidden" value="<%= product._id %>" name="idPro">
+                                
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary">Đăng nhập
+                                <i class="fas fa-location-arrow"></i>
+                            </button>
+                            <input type="hidden" name="_csrf" value="<%=csrfToken %>">
+        
+                            
+        
+                        </form>
+                        
+                    </div>
+                <% }else { %>
+                    <h1>Bình luận</h1>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+    <% include ../layouts/footer %>

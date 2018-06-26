@@ -1,0 +1,72 @@
+<% include ../layouts/header.ejs %>
+    
+    <div class="container content">
+        <% var i, j, cateLength = cate.length, proLength = product.length %>
+        <% for(i = 0; i < cateLength; i++){ %>
+            <div class="personalization">
+                <div class="row">
+                    <h4>
+                        <a href="<%= cate[i].url %>/all">
+                            <%= cate[i].name %>
+                        </a>
+                       
+                    </h4>
+                    <% for(j = 0; j < proLength; j++){ %>
+                        <% if(product[j].cateId == cate[i]._id){ %>
+                        <div class="col-cl-4 col-md-4">
+                            <div class="thumbnail">
+                                <a href="/<%= cate[i].url %>/<%= product[j].tittleLink %>.<%= product[j]._id%>">
+                                    <img class="lazyload" data-original="<%= product[j].imagePath[0] %>" alt="...">
+                                </a>
+
+                                <div class="caption">
+                                    <h3>
+                                        <%= product[j].tittle %>
+                                    </h3>
+                                    <p class="description">
+                                        <%= product[j].description %>
+                                    </p>
+                                    
+                                    <% if(product[j].saleOff) {%>
+                                        <p class="price-sale">
+                                            <span style="color:red">
+                                                <%= product[j].saleOff %>
+                                            </span>
+                                            <p>
+                                                <del> <%= product[j].price %></del>
+                                                <% var percent = Math.round(((product[j].price - product[j].saleOff) * 100 ) / product[j].price) %>
+                                                <span class="price-percent">-<%= percent %> %</span>
+                                            </p>
+                                            
+                                        </p>
+                                    <% } else{ %>
+                                        <p class="price-sale">
+                                            <span style="color:red"><%= product[j].price %></span>
+                                        </p>
+                                    <% } %>
+                                    
+                                    <% if( product[j].qty == 0) { %>
+                                        <p class="btn btn-danger" >Tạm hết hàng</p>
+                                    <% }else{ %>
+                                        <p>
+                                            <a href="/add-cart/<%= product[j]._id %> " class="btn btn-primary" role="button">Thêm vào giỏ hàng</a>
+
+                                        </p>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                        <% } %>
+                        <%  }; %>
+                </div>
+
+            </div>
+
+            <% } %>
+
+                <input id="demo1" type="text" value="55" name="demo1">
+    </div>
+    
+    
+    
+    <% include ../layouts/footer.ejs %>

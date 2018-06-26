@@ -1,0 +1,58 @@
+<% include ../layouts/header.ejs %>
+
+<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+        <div class="row">
+            <div class="content-header col-lg-5">
+                <h3>DANH SÁCH CATEGORY</h3>
+            </div>
+        </div>
+        <div class="row">
+            <% if(success_msg != ''){ %>
+                <div class="alert alert-success"><%= success_msg %></div>
+            <% } %>
+            <div class="content-body col-lg-12">
+                <table id="example" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Tỉnh</th>
+                            <th>Số lượng</th>
+                            <th>Trạng thái</th>
+                            <th>Tổng tiền</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% cart.forEach(function(data){ var qty = 0; var sum = 0%>
+                        <tr>
+                            <td><%= data.name  %></td>
+                            <td><%= data.province  %></td>
+                            <% data.cart.forEach(function(itemCart){ qty+= itemCart.qty;  %>
+                                <% 
+                                    sum+= itemCart.price
+                                 %>
+                            <% }) %>
+                            <td><%= qty  %></td>
+                            <!-- three status : add to cart, deliveri, paid users-->
+                            <% if(data.status == 0) { %>
+                                <td><span>Đặt hàng</span></td>
+                            <% }else if(data.status == 1) { %>
+                                <td><span>Đang giao hàng</span></td>
+                            <% }else{ %>
+                                <td><span>Đã thanh toán</span></td>
+                            <% } %>
+                            <td><%= sum  %></td>
+                            <td>
+                                <a href="/admin/cart/danh-sach/<%= data._id %>"><button class="btn btn-primary">Chi tiết</button></a>
+                                <a href="/admin/cart/xoa-cart/<%= data._id %>"><button class="btn btn-danger">Xóa</button></a>
+                                
+                            </td>
+                            
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+<% include ../layouts/footer.ejs %>

@@ -1,0 +1,103 @@
+
+<% include ../layouts/header %>
+    
+    <% if(product && product[0]){ %>
+    <div class="container shopping-cart text-center">
+        <div class="row">
+
+            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-lg-offset-2">
+                
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Hình ảnh</th>
+                                <th class="text-center">Tên sản phẩm</th>
+                                <th class="text-center">Action</th>
+                                <th class="text-center">Số lượng</th>
+                                <th class="text-center">Giá</th>
+                                <th class="text-center">Tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%  var totalPrice = 0;product.forEach(function(pro){ totalPrice += pro.price;  %>
+                                <tr class="active">
+                                    <td>
+                                        <img src=" <%= pro.item.imagePath[0] %> " alt=""> </td>
+                                    <td>
+                                        <%= pro.item.tittle %>
+                                    </td>
+                                    <td>
+                                        <a href="javascript:void(0)" class="update-cart" id="<%=pro.item._id%>">
+                                           Update
+                                        </a>
+                                        
+                                        
+                                       <a href="/xoa-cart/<%=pro.item._id%>">
+                                           <div class="btn btn-danger">Delete</div>
+                                       </a>
+                                    </td>
+                                    <td class="bootstrap-touchspin"> 
+                                        <div class="form-group">
+                                             <div class="input-group search">
+                                                <span class="input-group-btn" >
+                                                    <button class="btn btn-default btn-1" type="button">-</button>
+                                                </span>
+                                                <input type="text" class="form-control update" value="<%=pro.qty %>">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-default btn-2" type="button" >+</button>
+                                                </span>
+                                            </div><!-- /input-group -->
+                                        </div>
+                                    </td>
+                                    <% if(pro.item.saleOff) { %>
+                                        <td>
+                                            <%= pro.item.saleOff %>
+                                        </td>
+                                    <% }else { %>
+                                        <td>
+                                            <%= pro.item.price %>
+                                        </td>  
+                                    <% } %>
+                                    
+                                    <td>
+                                        <%= pro.price %>
+                                    </td>
+                                </tr>
+                                <% }); %>
+                        </tbody>
+                    </table>
+
+            </div>
+
+        </div>
+        <div>
+            <div class="col-lg-8 col-lg-offset-2 text-right" style="padding:20px 140px">Tổng tiền:
+                <%= totalPrice  %>
+                
+                
+            </div>
+        </div>
+        <div>
+            <div class="col-lg-8 col-lg-offset-2 text-right">
+                <a href="/checkout">
+                    <button type="button" class="btn btn-primary">Đặt hàng</button>
+                </a>
+                
+
+            </div>
+        </div>
+        
+    </div>
+    <% }else{ %>
+    <div class="container non-spCart text-center">
+        <div >
+            <h2>Không có gì trong giỏ hàng</h2>
+        </div>
+    </div>
+    <% } %>
+
+
+
+
+
+    <% include ../layouts/footer %>

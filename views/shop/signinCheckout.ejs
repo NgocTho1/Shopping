@@ -1,0 +1,129 @@
+<% include ../layouts/header %>
+<div class="container shipping-header">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2 text-center">
+            <% if(login) { %>
+                <div class="col-md-4 disable">
+                        <span>Bước 1 :</span>
+                        <span >Đăng nhập</span>
+                    </div>
+                    <div class="col-md-4 active">
+                        <span>Bước 2 :</span>
+                        <span >Địa chỉ giao hàng</span>
+                </div>          
+            <% } else {%>
+            <div class="col-md-4 active">
+                <span>Bước 1 :</span>
+                <span >Đăng nhập</span>
+            </div>
+            <div class="col-md-4 disable">
+                <span>Bước 2 :</span>
+                <span >Địa chỉ giao hàng</span>
+            </div>
+            <% } %>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+
+        
+            <% if(login) {%>
+                
+
+                
+                <form action="/dat-hang" method="POST" style="margin:50px" class="form-horizontal dat-hang">
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-1 control-label">Họ và tên:</label>
+                            <div class="col-sm-3">
+                                <% if(login){ %>
+                                <input type="text" name="name" class="form-control"  value="<%= userLocal %><%= userFb %>">
+                                <% }else{ %>
+                                <input type="text" name="name" class="form-control"  value="">
+                                <% } %>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-1 control-label">Số điện thoại:</label>
+                    
+                            <div class="col-sm-3">
+                                <input type="text" name="sdt" class="form-control"  placeholder="Số điện thoại">
+                    
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-1 control-label">Tỉnh/Thành phố :</label>
+                            <div class="col-sm-3">
+                                <select name="province" class="form-control" id="province">
+                                    <option value="" >Chọn Tỉnh/Thành phố</option>
+                                    <% if(province){ %>
+                                        <% province.forEach(function(data) { %>
+                                            <option  value=" <%= data._id  %>"><%= data.province %></option>
+                                        <% }) %>
+                                    <% } %>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-1 control-label">Quận/Huyện :</label>
+                            <div class="col-sm-3">
+                                <select name="dictrict" class="form-control" id="dictrict">
+                                    <option value="">Chọn Quận/Huyện</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-1 control-label">Phường/Xã :</label>
+                            <div class="col-sm-3">
+                                <select name="ward" class="form-control" id="ward">
+                                    <option value="">Chọn Phường/Xã</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-1 control-label">Tin nhắn:</label>
+                            <div class="col-sm-3">
+                                <textarea  class="required" rows="3" cols="40" id="message" name="message"></textarea>
+                            </div>
+                        </div>
+                        <h6 id="err-pw"></h6>
+                        <input type="hidden" class="val-province" name="val-province">
+                        
+                        <button type="button" class="btn btn-primary submit">Submit</button>
+                        
+                        
+                </form>
+            
+            <% }else { %>
+            <form action="" method="POST" role="form">
+                <legend>Đăng nhập</legend>
+
+                <div class="form-group">
+                    <label for="">Email:</label>
+                    <input type="text" class="form-control" id="" name="email" value="<%= valEmail %>" placeholder="Email">
+                </div>
+                <p style="color:red">
+                    <%= errEmail %>
+                </p>
+                <div class="form-group">
+                    <label for="">Mật khẩu:</label>
+                    <input type="text" class="form-control" id="" name="password" placeholder="Mật khẩu">
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Đăng nhập
+                    <i class="fas fa-location-arrow"></i>
+                </button>
+
+
+                <input type="hidden" name="_csrf" value="<%=csrfToken %>">
+
+            </form>
+            <a href="http://localhost:4500/user/auth/facebook">Dang nhap bang Facebook</a>
+            <% } %>
+        </div>
+
+    </div>
+</div>
+
+<% include ../layouts/footer %>

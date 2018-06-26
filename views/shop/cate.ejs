@@ -1,0 +1,76 @@
+<% include ../layouts/header.ejs %>
+    <div class="container">
+        <div class="row">
+                
+                
+                <% pro.forEach(function(pro){ %>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <div class="thumbnail">
+                                    <a href="/<%= cate.url %>/<%= pro.tittleLink %>.<%= pro._id %>">
+                                        <img class="lazyload" data-original="<%= pro.imagePath[0] %>" alt="...">
+                                    </a>
+    
+                                    <div class="caption">
+                                        <h3>
+                                            <%= pro.tittle %>
+                                        </h3>
+                                        <p class="description">
+                                            <%= pro.description %>
+                                        </p>
+                                        <p>
+                                            <span style="color:red">
+                                                <%= pro.price %>
+                                            </span>
+                                        </p>
+                                        <% if( pro.qty == 0) { %>
+                                            <p class="btn btn-danger" >Tạm hết hàng</p>
+                                        <% }else{ %>
+                                            <p>
+                                                <a href="/add-cart/<%= pro._id %> " class="btn btn-primary" role="button">Thêm vào giỏ hàng</a>
+                        
+                                            </p>
+                                        <% } %>
+                                    </div>
+                                </div>
+                    </div>
+                <% }) %>
+                <% if(lengthPage == 1) {%>
+
+                <% }else { %>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <% if( nextPage != 1){ %>
+                        <li>
+                            <a href="/<%= cate.url %>/all?page=<%= nextPage - 1 %>" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <% } %>
+
+                        <% for(i = 1; i <= lengthPage; i++) { var dow = nextPage -3; var up = nextPage +3%>
+                            <% if( dow<i && i<up ) {%>
+                                <% if( nextPage == i) {%>
+                                    <li><a href="/<%= cate.url %>/all?page=<%= i %>" style="background: #3498db; color: white"> <%= i %> </a></li>
+                                <% }else {%>
+                                    <li><a href="/<%= cate.url %>/all?page=<%= i %>"> <%= i %> </a></li>
+                                <% } %>
+                            <% } %>
+                        <% } %>
+
+                        <% if( lengthPage != nextPage){ %>
+                            <li>
+                                <a href="/<%= cate.url %>/all?page=<%= nextPage +1 %>" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        <% } %>
+                    </ul>
+                  </nav>
+                <% } %>
+        </div>
+    </div>
+    
+            
+       
+
+<% include ../layouts/footer.ejs %>

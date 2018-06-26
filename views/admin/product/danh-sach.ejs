@@ -1,0 +1,70 @@
+<% include ../layouts/header.ejs %>
+<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+        <div class="row">
+            <div class="content-header col-lg-5">
+                <h3>DANH SÁCH CATEGORY</h3>
+            </div>
+        </div>
+        <div class="row">
+            <% if(success_msg != ''){ %> 
+                <div class="alert alert-success"><%= success_msg%></div>
+            <% } %>
+            <% if(errorLocal != ''){ %> 
+                <div class="alert alert-danger"><%= errorLocal%></div>
+            <% } %>
+            <div class="content-body col-lg-12">
+                <table id="example" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Cate</th>
+                            <th>Image</th>
+                            <th>Price</th>
+                            <th>Sale Off</th>
+                            <th>Quality</th>
+                            <th>Action</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% cate.forEach(function(cate){ %>
+                            <% pro.forEach(function(pro){ %>
+                                <% if(cate._id == pro.cateId){ %>
+                                <tr>
+                                    <td><%= pro.tittle  %></td>
+                                    <td><%= cate.url %></td>
+                                    
+                                    <td><img src="<%= pro.imagePath[0]%>" height="100px" width="100px"  alt=""></td>
+                                    <td><%= pro.price %></td>
+                                    <% if( pro.saleOff == 0 || pro.saleOff == undefined) { %>
+                                        <td>Không</td>
+                                    <% }else {%>
+                                        <td><%= pro.saleOff %></td>
+                                    <% } %>
+                                    
+                                    <% if(pro.qty == 0){ %>
+                                        <td style="color: red">Hết hàng</td>
+                                    <% }else{ %>
+                                        <td><%= pro.qty  %></td>
+                                    <% } %>
+                                   
+                                    <td>
+                                        <a href="/admin/product/sua-product/<%= pro._id%>"><button class="btn btn-primary">Sửa</button></a>
+                                        <a href="/admin/product/xoa-product/<%= pro._id %>" onclick="return confirm('Bạn có muốn xóa?')"><button  class="btn btn-danger">Xóa</button></a>
+                                    </td>
+                                    
+                                </tr>
+                                <% } %>
+                            <% }) %>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+    
+
+<% include ../layouts/footer.ejs %>

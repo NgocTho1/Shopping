@@ -1,0 +1,31 @@
+<% include ../layouts/header.ejs %>
+    
+    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 sua-cate">
+        <div class="row">
+            <div class="content-header col-lg-5">
+                <h3>Sửa category</h3>
+            </div>
+        </div>
+        <div class="row content">
+            <% if(success_msg != ''){ %> 
+                <div class="alert alert-success"><%= success_msg%></div>
+            <% } %>
+            <div class="content-body col-lg-12">
+                <div class="description col-lg-6">
+                    <h3>Thông tin</h3>
+                    <div class="sua-content">
+                        <form action="" method="POST">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Name</label>
+                                <input type="name" name="name" value="<%= cate.name %>" class="form-control" id="exampleInputEmail1" >
+                            </div>
+                            <button class="btn btn-primary">Save</button>
+                            <button class="btn btn-danger">Cancel</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+<% include ../layouts/footer.ejs %>

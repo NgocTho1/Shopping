@@ -1,0 +1,65 @@
+<% include ../layouts/header %>
+<form action="/dat-hang" method="POST" style="margin:50px" class="form-horizontal dat-hang">
+    <div class="form-group">
+        <label for="inputEmail3" class="col-sm-1 control-label">Họ và tên:</label>
+        <div class="col-sm-3">
+            <% if(login){ %>
+            <input type="text" name="name" class="form-control"  value="<%= userLocal %><%= userFb %>">
+            <% }else{ %>
+            <input type="text" name="name" class="form-control"  value="">
+            <% } %>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label for="inputEmail3" class="col-sm-1 control-label">Số điện thoại:</label>
+
+        <div class="col-sm-3">
+            <input type="text" name="sdt" class="form-control"  placeholder="Số điện thoại">
+
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputEmail3" class="col-sm-1 control-label">Tỉnh/Thành phố :</label>
+        <div class="col-sm-3">
+            <select name="province" class="form-control" id="province">
+                <option value="" >Chọn Tỉnh/Thành phố</option>
+                <% if(province){ %>
+                    <% province.forEach(function(data) { %>
+                        <option  value=" <%= data._id  %>"><%= data.province %></option>
+                    <% }) %>
+                <% } %>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputEmail3" class="col-sm-1 control-label">Quận/Huyện :</label>
+        <div class="col-sm-3">
+            <select name="dictrict" class="form-control" id="dictrict">
+                <option value="">Chọn Quận/Huyện</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputEmail3" class="col-sm-1 control-label">Phường/Xã :</label>
+        <div class="col-sm-3">
+            <select name="ward" class="form-control" id="ward">
+                <option value="">Chọn Phường/Xã</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputEmail3" class="col-sm-1 control-label">Tin nhắn:</label>
+        <div class="col-sm-3">
+            <textarea  class="required" rows="3" cols="40" id="message" name="message"></textarea>
+        </div>
+    </div>
+    <h6 id="err-pw"></h6>
+    <input type="hidden" class="val-province" name="val-province">
+    
+    <button type="button" class="btn btn-primary submit">Submit</button>
+    
+    
+</form>
+
+<% include ../layouts/footer %>

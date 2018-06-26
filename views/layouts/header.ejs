@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <base href="http://localhost:4900">
+    <link rel="stylesheet" href="stylesheets/jquery.bootstrap-touchspin.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" integrity="sha384-3AB7yXWz4OeoZcPbieVW64vVXEwADiYyAEhwilzWsLw+9FgqpyjjStpPnpBO8o8S"
+        crossorigin="anonymous">
+    <link rel="icon" href="/image/favicon1.ico" type="image/x-icon">
+    <link rel="stylesheet" href="stylesheets/style.css">
+    <!--<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
+    <!--<script src="/javascript/jquery.js"></script>-->
+    
+</head>
+
+<body>
+    <!-- Header start -->
+    <header>
+        <nav class="navbar navbar-default" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">Trang chủ</a>
+            </div>
+            <div class="form-search">
+                <form action="">
+                    <div class="col-lg-3" style="padding-top: 8px">
+                        <div class="input-group">
+                          <input type="text" class="form-control search" placeholder="Search for...">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default click" type="button">Search</button>
+                          </span>
+                        </div><!-- /input-group -->
+                    </div><!-- /.col-lg-6 -->
+                    <div class="suggest">
+                        
+                    </div>
+                      
+                </form>
+            </div>
+            
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a href="#">Link</a>
+                    </li>
+                    <li>
+                        <a href="#">Link</a>
+                    </li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/shopping-cart">Shopping Cart 
+                            
+                            <% if( session.spCart ){ %>
+                                <span class="badge">
+                                    <%= session.totalQty %>
+                                </span>
+                            <% }else if(login) {%>
+                            
+                                <span class="badge">
+                                    <%= session.totalQty %>
+                                </span>
+                            <% } %>
+                        </a>
+                        
+                    </li>
+                    <% if(login){ %>
+                        <li class="dropdown">
+
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-user fa-fw"></i>Xin chào  <%= userLocal%><%= userFb%>
+
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="/user/profile">Thông tin</a>
+                                </li>
+                                <li>
+                                    <a href="/user/order">
+                                        Đơn hàng của tôi
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/user/logout">Đăng xuất</a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        <% }else{ %>
+                            <li class="dropdown">
+
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-user fa-fw"></i>Đăng nhập
+
+                                    <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="redirect">
+                                        
+                                        Đăng nhập
+                                    </li>
+                                    <li>
+                                        <a href="/user/signup">Đăng ký</a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                            <% }  %>
+                </ul>
+                </li> 
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
+    </header>
+    
