@@ -120,6 +120,7 @@ $(document).ready(function () {
 
     $('#province').change(function () {
         var province = $('#province').val();
+        
         $.post('/dictrict', { 'value1': province }, function (data) {
             $('#dictrict').html('<option value="">Chọn Quận/Huyện</option>');
             $('#ward').html('<option value="">Chọn Xã</option>');

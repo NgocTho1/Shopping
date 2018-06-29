@@ -49,7 +49,7 @@ router.get('/', (req, res) => {
             data.cartUser = result; 
             req.session.spCart = '';
             data.save();
-            res.render('shop/signinCheckout', {province : province1}) ;
+            res.render('shop/signinCheckout', {province : province1, csrfToken : req.csrfToken()}) ;
         }).catch((err) => {
             var newCart = new cartdb();
             
@@ -58,11 +58,11 @@ router.get('/', (req, res) => {
             req.session.spCart = ''; 
             newCart.save(); 
             province.find(function(err, cb){
-                res.render('shop/signinCheckout', {province : cb});
+                res.render('shop/signinCheckout', {province : cb, csrfToken : req.csrfToken()});
             })
         });
         }else {
-        res.render('shop/signinCheckout', { errEmail : req.flash('err-email'), valEmail:req.flash('valEmail'), csrfToken:req.csrfToken()})
+        res.render('shop/signinCheckout', { errEmail : req.flash('err-email'), valEmail:req.flash('valEmail'), csrfToken : req.csrfToken()})
     }
 });
 
