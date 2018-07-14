@@ -11,8 +11,7 @@ var ward = require('../model/address/ward.js');
 var checkout = require('../model/checkout.js');
 var cartdb = require('../model/cartdb.js');
 
-var csrf=require("csurf");
-router.use(csrf());
+
 
 function totalQty(req){
     var qty = 0;
