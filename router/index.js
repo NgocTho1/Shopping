@@ -311,7 +311,7 @@ router.get('/:cate/:name.:id',function(req, res) {
             const cateId = await cate.findOne({ url : cateUrl});
             const relatedPro = await Product.find({ cateId : cateId._id, _id : {$ne : id}});
             const pro = await Product.findOne( {_id: id, tittleLink : name, cateId : cateId._id });
-            res.render('./shop/chi-tiet', {product : pro, cate : cateId, relatedPro : relatedPro,  csrfToken : req.csrfToken()});
+            res.render('./shop/chi-tiet', {product : pro, cate : cateId, relatedPro : relatedPro});
         }catch(err) {
             res.render('error', {message : 'Không tìm thấy'});
         }
